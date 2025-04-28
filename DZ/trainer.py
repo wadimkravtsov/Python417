@@ -155,18 +155,18 @@ from idlelib.configdialog import is_int
 # print('Сумма чисел в диапазоне ', sum_range(a,b))
 
 
-def keys(*, a=5, b=10, c=None):
-    if c == None:
-        print(a,b)
-    else:
-        print(a,b,c)
-
-
-keys(a = 1, b = 2, c=10)
+# def keys(*, a=5, b=10, c=None):
+#     if c == None:
+#         print(a,b)
+#     else:
+#         print(a,b,c)
+#
+#
+# keys(a = 1, b = 2, c = 12)
 
 
 #============================ Строки ====================
-
+#
 # c = str.format('{0} вставляются {1}{2}', 'гвозди', 'в ', 'отверстия')
 # print(c)
 
@@ -218,6 +218,39 @@ keys(a = 1, b = 2, c=10)
 # num = 5
 # print(slicer(tp,num))
 
+# tp = (5,6,34,102,37,1267,11)  #  ищем введённое число в кортеже, если есть - удаляем его из кортежа, если нет - сохраняеь кортеж.
+#
+#
+# def del_from_tupl(num):
+#     ind = tp.index(num)
+#     lst = list(tp)
+#     del lst[ind]
+#     print(f'Удалили из кортежа {num}, получили: {tuple(lst)}')
+#
+#
+# print(tp)
+# num = int(input('Введите любой элемент:'))
+# if num not in tp:
+#     print(f'Нет элемента {num} в кортеже {tp}')
+# else:
+#     del_from_tupl(num)
+
+
+students = (('Wadim', 24, 3, 'Barnaul'), ('Svetlana', 22, 4, 'Kirov'), ('Lera', 30, 5, 'Perm'))  # кортеж кортежей с данными и баллами учеников
+def good_students(students): #  вычисляем средний балл и выводим список тех, у кого балл равен или выше.
+    summ = 0
+    good = []
+    for student in students:
+        summ += student[2]
+    for student in students:
+        if student[2] >= summ/len(students):
+            good.append(student[0])
+    print('Ученики ', end = '')
+    for i in good:
+        print(i, end = ', ')
+    print(' в этом семестре хорошо учатся')
+
+good_students(students)
 # ======================================== Леция 9 от 05.04. =============================================
 
 # d = {'name': 'kelly', 'age': 25, 'salary': 8000, 'city': 'New York'}
@@ -254,3 +287,8 @@ keys(a = 1, b = 2, c=10)
 # =============================== Лекция 10 от 6.04 =============================
 
 # print((lambda x, y, z: (x + y) / z)(1,2,3))
+
+# import random  # генерация списка случайных чисел с заданным количеством!
+#
+# s = [round(random.uniform(0,9), 2) for i in range(10)]
+# print(s)
