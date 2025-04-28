@@ -236,7 +236,7 @@ from idlelib.configdialog import is_int
 #     del_from_tupl(num)
 
 
-students = (('Wadim', 24, 3, 'Barnaul'), ('Svetlana', 22, 4, 'Kirov'), ('Lera', 30, 5, 'Perm'))  # кортеж кортежей с данными и баллами учеников
+students = (('Wadim', 24, 4, 'Barnaul'), ('Svetlana', 22, 4, 'Kirov'), ('Lera', 30, 3, 'Perm'))  # кортеж кортежей с данными и баллами учеников
 def good_students(students): #  вычисляем средний балл и выводим список тех, у кого балл равен или выше.
     summ = 0
     good = []
