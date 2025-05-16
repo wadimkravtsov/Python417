@@ -280,35 +280,145 @@ from fileinput import close
 #
 # print('Роботы выполнили работу, давйте их выключим!')
 
-# Модификаторы доступа:
+# # Модификаторы доступа:
+#
+# class Point:
+#     """ Класс для предоставления координат точек на плоскости """
+#
+#     def __init__(self,x,y):
+#         self.__x = x
+#         self.__y = y
+#
+#     def get_coord(self):
+#         return self.__x, self.__y
+#
+#     def __check_value(c):  # Закрытый метод
+#         return isinstance(c, (int,float)) # Упростили - передали в виде кортежа - либо int, либо float и всё это сразу в return
+#
+#     def set_coord(self, x, y):
+#         # if (isinstance(x, int) or isinstance(x, float)) and (isinstance(y, int) or isinstance(y, float)):
+#         if Point.__check_value(x) and Point.__check_value(y): # Проверка внутри класса работает
+#             self.__x = x
+#             self.__y = y
+#         else:
+#             print('Координаты должны быть числами')
+#
+# p1 = Point(5, 10)
+# print(p1.__dict__)
+# # print((p1.__x))
+# p1.set_coord(1,'2.5')
+# print(p1.get_coord())
+
+# print(Point.__dict__) # Посмотрим что теперь есть в Point?
+# print(Point.__check_value(5)) # Снаружи класса обращение невозможно - ошибка!
+
+
+#                            ЛЕКЦИЯ 18 от 11.05.2025 г.
+
+# Модификаторы доступа, продолжаем в том же коде.
+
+# class Point:
+#     """ Класс для предоставления координат точек на плоскости """
+#
+#     def __init__(self,x,y):
+#         self.__x = x
+#         self.__y = y
+#
+#     def get_coord(self):
+#         return self.__x, self.__y
+#
+#     def __check_value(c):  # Закрытый метод
+#         return isinstance(c, (int,float)) # Упростили - передали в виде кортежа - либо int, либо float и всё это сразу в return
+#
+#     def set_coord(self, x, y):
+#         # if (isinstance(x, int) or isinstance(x, float)) and (isinstance(y, int) or isinstance(y, float)):
+#         if Point.__check_value(x) and Point.__check_value(y): # Проверка внутри класса работает
+#             self.__x = x
+#             self.__y = y
+#         else:
+#             print('Координаты должны быть числами')
+#
+# p1 = Point(5, 10)
+# print(p1.__dict__)
+# # print((p1.__x))
+# # p1.set_coord(1,'2.5')
+# print(p1.get_coord())
+# p1._Point__x = 222  # ВСЁ РАВНО ОБОШЛИ ПРОВЕРКУ - ПРОГРАММИСТЫ ДОГОВОРИЛИСЬ ТАК НЕ ДЕЛАТЬ! Если свойство с __ то только через set, get
+# print(p1.__dict__)
+#
+# # ещё современный вариант создания геттеров и сеттеров с декоратором:
+#
+# class Point:
+#     """ Класс для предоставления координат точек на плоскости """
+#
+#     def __init__(self,x,y):
+#         self.__x = x
+#         self.__y = y
+#     @property  # геттер
+#     def x(self):
+#         print('Вызов __get_x')
+#         return self.__x
+#
+#     @x.setter  # сеттер
+#     def x(self, x):
+#         print('Вызов __set_x')
+#         self.__x = x
+#
+#     @x.deleter  # Удаление свойства
+#     def x(self):
+#         print('Удаление свойства')
+#         del self.__x
+#
+# p1 = Point(5, 10)
+# p1.x = 50
+# print(p1.x)
+# del p1.x
+
+#  Задача - перевод килограмм в фунты
+#
+# class KgToPounds:
+#
+#     def __init__(self, kg):
+#         self.__kg = kg  # _KgToPounds__kg
+#
+#     @property
+#     def kg(self):
+#         return self.__kg
+#
+#     @kg.setter
+#     def kg(self, new_kg):
+#         if isinstance(new_kg, (int, float)):
+#             self.__kg = new_kg
+#         else:
+#             print('Килограммы задаются только числом')
+#
+#     def to_pound(self):
+#         return self.__kg * 2.205
+#
+# w = KgToPounds(12)
+# print(w.kg, 'кг =>', w.to_pound(), 'фунтов')
+# w.kg = 41
+# print(w.kg, 'кг =>', w.to_pound(), 'фунтов')
+
+#  Закрытые статические свойства:
 
 class Point:
     """ Класс для предоставления координат точек на плоскости """
+    __count = 0  # Закрытое статическое свойство:
+    def __init__(self,x = 0,y = 0):
+        self.x = x
+        self.y = y
+        Point.__count += 1
 
-    def __init__(self,x,y):
-        self.__x = x
-        self.__y = y
-
-    def get_coord(self):
-        return self.__x, self.__y
-
-    def set_coord(self, x, y):
-        if (isinstance(x, int) or isinstance(x, float)) and (isinstance(y, int) or isinstance(y, float)):
-            self.__x = x
-            self.__y = y
-        else:
-            print('Координаты должны быть числами')
-
-p1 = Point(5, 10)
-print(p1.__dict__)
-# print((p1.__x))
-p1.set_coord(1,123)
-print(p1.get_coord())
+    @staticmethod  # сделали статический метод без self
+    def get_count():
+        return Point.__count
 
 
-
-
-
+p1 = Point()
+p2 = Point()
+p3 = Point()
+print(Point.get_count())
 
 
 
