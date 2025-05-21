@@ -400,25 +400,60 @@ from fileinput import close
 # w.kg = 41
 # print(w.kg, 'кг =>', w.to_pound(), 'фунтов')
 
-#  Закрытые статические свойства:
+# #  Закрытые статические свойства:
+#
+# class Point:
+#     """ Класс для предоставления координат точек на плоскости """
+#     __count = 0  # Закрытое статическое свойство:
+#     def __init__(self,x = 0,y = 0):
+#         self.x = x
+#         self.y = y
+#         Point.__count += 1
+#
+#     @staticmethod  # сделали статический метод без self
+#     def get_count():
+#         return Point.__count
+#
+#
+# p1 = Point()
+# p2 = Point()
+# p3 = Point()
+# print(Point.get_count())
+
+
+#                  К ЛЕКЦИИ 20 Тема: 'Абстрактные классы и методы'
 
 class Point:
-    """ Класс для предоставления координат точек на плоскости """
-    __count = 0  # Закрытое статическое свойство:
-    def __init__(self,x = 0,y = 0):
-        self.x = x
-        self.y = y
-        Point.__count += 1
+    def __init__(self, x=0, y=0):
+        self.__x = x
+        self.__y = y
 
-    @staticmethod  # сделали статический метод без self
-    def get_count():
-        return Point.__count
+    def __str__(self) -> str:
+        return f"({self.__x}, {self.__y})"
 
 
-p1 = Point()
-p2 = Point()
-p3 = Point()
-print(Point.get_count())
+class Prop:
+    def __init__(self, sp: Point, ep: Point, color: str = "red", width: int = 1) -> None:
+        self._sp = sp
+        self._ep = ep
+        self._color = color
+        self._width = width
+
+
+class Line(Prop):
+    def draw(self) -> None:
+        print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
+
+
+class Rect(Prop):
+    def draw(self) -> None:
+        print(f"Рисование прямоугольника: {self._sp}, {self._ep}, {self._color}, {self._width}")
+
+
+class Ellipse(Prop):
+    def draw(self) -> None:
+        print(f"Рисование эллипса: {self._sp}, {self._ep}, {self._color}, {self._width}")
+
 
 
 
