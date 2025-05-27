@@ -419,41 +419,83 @@ from fileinput import close
 # p2 = Point()
 # p3 = Point()
 # print(Point.get_count())
+#
+#
+# #                  К ЛЕКЦИИ 20 Тема: 'Абстрактные классы и методы'
+#
+# class Point:
+#     def __init__(self, x=0, y=0):
+#         self.__x = x
+#         self.__y = y
+#
+#     def __str__(self) -> str:
+#         return f"({self.__x}, {self.__y})"
+#
+#
+# class Prop:
+#     def __init__(self, sp: Point, ep: Point, color: str = "red", width: int = 1) -> None:
+#         self._sp = sp
+#         self._ep = ep
+#         self._color = color
+#         self._width = width
+#
+#
+# class Line(Prop):
+#     def draw(self) -> None:
+#         print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
+#
+#
+# class Rect(Prop):
+#     def draw(self) -> None:
+#         print(f"Рисование прямоугольника: {self._sp}, {self._ep}, {self._color}, {self._width}")
+#
+#
+# class Ellipse(Prop):
+#     def draw(self) -> None:
+#         print(f"Рисование эллипса: {self._sp}, {self._ep}, {self._color}, {self._width}")
 
 
-#                  К ЛЕКЦИИ 20 Тема: 'Абстрактные классы и методы'
-
-class Point:
-    def __init__(self, x=0, y=0):
-        self.__x = x
-        self.__y = y
-
-    def __str__(self) -> str:
-        return f"({self.__x}, {self.__y})"
+#                    К ЛЕКЦИИ 21, ТЕМА: Вложенные классы
 
 
-class Prop:
-    def __init__(self, sp: Point, ep: Point, color: str = "red", width: int = 1) -> None:
-        self._sp = sp
-        self._ep = ep
-        self._color = color
-        self._width = width
+class MyOuter:
+    age = 18
+
+    def __init__(self, name):
+        self.name = name
+
+    @staticmethod
+    def other_static_method():
+        print("Метод наружного класса")
+
+    def other_obj_method(self):
+        print("Метод экземпляра наружного класса")
+
+    # @staticmethod
+    # def other_static_method():
+    #     print("Метод наружного класса")
+    #
+    # def other_obj_method(self):
+    #     print("Метод экземпляра наружного класса")
+
+    class MyInner:
+        def __init__(self, inner_name, obj):
+            self.inner_name = inner_name
+            self.obj = obj  # в инициализаторе внутреннего класс создали экземпляр наружного
+        #     self.obj = obj  # self.obj = MyOuter('внешний')
+        def inner_method(self):
+            print('метод во внутреннем классе', MyOuter.age)
+            MyOuter.other_static_method()
+        #
+        def inner_method(self):
+            print("Метод во внутреннем классе", MyOuter.age, self.obj.name)
+            MyOuter.other_static_method()
+            self.obj.other_obj_method()
 
 
-class Line(Prop):
-    def draw(self) -> None:
-        print(f"Рисование линии: {self._sp}, {self._ep}, {self._color}, {self._width}")
-
-
-class Rect(Prop):
-    def draw(self) -> None:
-        print(f"Рисование прямоугольника: {self._sp}, {self._ep}, {self._color}, {self._width}")
-
-
-class Ellipse(Prop):
-    def draw(self) -> None:
-        print(f"Рисование эллипса: {self._sp}, {self._ep}, {self._color}, {self._width}")
-
-
-
+out = MyOuter('внешний')
+inner = out.MyInner('внутренний',out)
+# inner = out.MyInner('внутренний', out)
+print(inner.inner_name)
+inner.inner_method()
 
