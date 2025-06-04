@@ -458,18 +458,18 @@ from fileinput import close
 #                    К ЛЕКЦИИ 21, ТЕМА: Вложенные классы
 
 
-class MyOuter:
-    age = 18
-
-    def __init__(self, name):
-        self.name = name
-
-    @staticmethod
-    def other_static_method():
-        print("Метод наружного класса")
-
-    def other_obj_method(self):
-        print("Метод экземпляра наружного класса")
+# class MyOuter:
+#     age = 18
+#
+#     def __init__(self, name):
+#         self.name = name
+#
+#     @staticmethod
+#     def other_static_method():
+#         print("Метод наружного класса")
+#
+#     def other_obj_method(self):
+#         print("Метод экземпляра наружного класса")
 
     # @staticmethod
     # def other_static_method():
@@ -477,25 +477,53 @@ class MyOuter:
     #
     # def other_obj_method(self):
     #     print("Метод экземпляра наружного класса")
+#
+#     class MyInner:
+#         def __init__(self, inner_name, obj):
+#             self.inner_name = inner_name
+#             self.obj = obj  # в инициализаторе внутреннего класс создали экземпляр наружного
+#         #     self.obj = obj  # self.obj = MyOuter('внешний')
+#         def inner_method(self):
+#             print('метод во внутреннем классе', MyOuter.age)
+#             MyOuter.other_static_method()
+#         #
+#         def inner_method(self):
+#             print("Метод во внутреннем классе", MyOuter.age, self.obj.name)
+#             MyOuter.other_static_method()
+#             self.obj.other_obj_method()
+#
+#
+# out = MyOuter('внешний')
+# inner = out.MyInner('внутренний',out)
+# # inner = out.MyInner('внутренний', out)
+# print(inner.inner_name)
+# inner.inner_method()
 
-    class MyInner:
-        def __init__(self, inner_name, obj):
-            self.inner_name = inner_name
-            self.obj = obj  # в инициализаторе внутреннего класс создали экземпляр наружного
-        #     self.obj = obj  # self.obj = MyOuter('внешний')
-        def inner_method(self):
-            print('метод во внутреннем классе', MyOuter.age)
-            MyOuter.other_static_method()
-        #
-        def inner_method(self):
-            print("Метод во внутреннем классе", MyOuter.age, self.obj.name)
-            MyOuter.other_static_method()
-            self.obj.other_obj_method()
+# К Занятию 23 от 31.05.2025: "Модули и пакеты"
+
+# from geometry import *
+#
+# r1 = rect.Rectangle(1, 2)
+# r2 = rect.Rectangle(3, 4)
+#
+# s1 = sq.Square(10)
+# s2 = sq.Square(20)
+#
+# t1 = trian.Triangle(1, 2, 3)
+# t2 = trian.Triangle(4, 5, 6)
+#
+# shape = [r1, r2, s1, s2, t1, t2]
+#
+# for g in shape:
+#     print(g.perimeter())
 
 
-out = MyOuter('внешний')
-inner = out.MyInner('внутренний',out)
-# inner = out.MyInner('внутренний', out)
-print(inner.inner_name)
-inner.inner_method()
+
+
+from autopark import *
+
+at1 = Auto1.Auto('Haval', 'Jolion', 2023, 15000)
+at1.info_auto()
+et1 = Auto2.Electric_auto('Haval', 'Jolion', 2023, 15000,95)
+et1.info_auto1()
 
