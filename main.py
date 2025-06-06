@@ -520,10 +520,54 @@ from fileinput import close
 
 
 
-from autopark import *
+# from autopark import *
+#
+# at1 = Auto1.Auto('Haval', 'Jolion', 2023, 15000)
+# at1.info_auto()
+# et1 = Auto2.Electric_auto('Haval', 'Jolion', 2023, 15000,95)
+# et1.info_auto1()
 
-at1 = Auto1.Auto('Haval', 'Jolion', 2023, 15000)
-at1.info_auto()
-et1 = Auto2.Electric_auto('Haval', 'Jolion', 2023, 15000,95)
-et1.info_auto1()
+# К Занятию 24 от 01.06.2025 JSON - формат
+
+import json
+from random import choice
+
+def gen_person():
+    name = ''
+    tel = ''
+    key = ''
+
+    letters = ['a', 'b', 'c', 'd', 'e', 'g', 'h', 'k', 'l', 'm', 'n']
+    num = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+
+    while len(name) != 7:
+        name += choice(letters)
+
+    while len(tel) != 10:
+        tel += choice(num)
+
+    while len(key) != 10:
+        key += choice(num)
+
+    person = {
+        key:{
+        'name': name,
+        'tel': tel}
+    }
+    return person
+
+# print(gen_person())
+
+def write_json(person_dict):
+    try:
+        data = json.load(open('person.json'))
+    except FileNotFoundError:
+        data = {}
+
+    dict.update(data, person_dict)
+    with open('person.json', 'w') as f:
+        json.dump(data, f, indent=2)
+
+for i in range(5):
+    write_json(gen_person())
 
