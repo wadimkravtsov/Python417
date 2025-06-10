@@ -527,47 +527,174 @@ from fileinput import close
 # et1 = Auto2.Electric_auto('Haval', 'Jolion', 2023, 15000,95)
 # et1.info_auto1()
 
-# К Занятию 24 от 01.06.2025 JSON - формат
+# # К Занятию 24 от 01.06.2025 JSON - формат
+#
+# import json
+# from random import choice
+#
+# def gen_person():
+#     name = ''
+#     tel = ''
+#     key = ''
+#
+#     letters = ['a', 'b', 'c', 'd', 'e', 'g', 'h', 'k', 'l', 'm', 'n']
+#     num = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+#
+#     while len(name) != 7:
+#         name += choice(letters)
+#
+#     while len(tel) != 10:
+#         tel += choice(num)
+#
+#     while len(key) != 10:
+#         key += choice(num)
+#
+#     person = {
+#         key:{
+#         'name': name,
+#         'tel': tel}
+#     }
+#     return person
+#
+# # print(gen_person())
+#
+# def write_json(person_dict):
+#     try:
+#         data = json.load(open('person.json'))
+#     except FileNotFoundError:
+#         data = {}
+#
+#     dict.update(data, person_dict)
+#     with open('person.json', 'w') as f:
+#         json.dump(data, f, indent=2)
+#
+# for i in range(5):
+#     write_json(gen_person())
 
-import json
-from random import choice
+# # К занятию 25 от 07.06.2025 "JSON, CSV и тд"
+#
+# import requests
+# import json
+#
+# response = requests.get("https://jsonplaceholder.typicode.com/todos") # Скачали файл в виде строки
+# # print(type(response.text))
+# todos = json.loads(response.text) # Перевели в json формат
+# # print(todos)
+#
+# todos_by_user = {}
+# for todo in todos:
+#     if todo['completed']:
+#         try:
+#             todos_by_user[todo['userId']] += 1
+#         except KeyError:
+#             todos_by_user[todo['userId']] = 1
+# print(todos_by_user) # Вывели словарь студент - количество выполненных работ
+#
+# top_users = sorted(todos_by_user.items(), key=lambda x: x[1], reverse = True) # Отсортировали по возрастанию
+# print(top_users)
+#
+# max_complete = top_users[0][1] # Вывели максимальное количество выполненных работ
+# print(max_complete) # Это - 12
+#
+# users = []
+# for user, num_complete in top_users: # Выводим список студентов с максимальным количеством выполненных задач
+#     if num_complete < max_complete:
+#         break
+#     users.append(str(user))
+# print(users)
+#
+# max_users = " and ".join(users)
+# print(max_users)
+#
+# print(f"Users {max_users} completed {max_complete} TOSos") # Печатаем номера студентов с максимальным количеством выполненных задач
+#
+# def keep(totdo1):
+#     is_complete = totdo1["completed"]
+#     has_max_count = str(totdo1["userId"]) in users
+#     return is_complete and has_max_count
+#
+# with open("filtered_data.json", "w") as f: # Запись в файл json
+#     filtered_todos = list(filter(keep, todos))
+# # print (filtered_todos)
+#     json.dump( filtered_todos, f, indent=2)
+#
+# with open("filtered_data.json", "r") as f: # Чтение из файла, проверка
+#     print(json.load(f))
 
-def gen_person():
-    name = ''
-    tel = ''
-    key = ''
+# CSV
 
-    letters = ['a', 'b', 'c', 'd', 'e', 'g', 'h', 'k', 'l', 'm', 'n']
-    num = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+import csv
 
-    while len(name) != 7:
-        name += choice(letters)
+# with open("data.csv") as f: # Через список
+#     file_reader = csv.reader(f, delimiter=";")
+    # count = 0
+    # for row in file_reader:
+    #     if count == 0:
+    #         print(f"Файл содержит столбцы: {', '.join(row)}")
+    #     else:
+    #         print(f"\t{row[0]} - {row[1]}. Родился в {row[2]} году")
+    #     count += 1
+    # print(f"Всего в файле {count} строки.")
 
-    while len(tel) != 10:
-        tel += choice(num)
+# with open("data.csv") as f: # Через словарь
+#     file_names = ['Имя', 'Профессия', 'Год рождения']
+#     file_reader = csv.DictReader(f, delimiter=";", fieldnames=file_names)
+#     count = 0
+#     for row in file_reader:
+#         if count == 0:
+#             print(f"Файл содержит столбцы: {', '.join(row)}")
+#         print(f"{row['Имя']} - {row['Профессия']}. Родился в {row['Год рождения']} году")
+#         count += 1
 
-    while len(key) != 10:
-        key += choice(num)
+# Записываем в CSV файл:
 
-    person = {
-        key:{
-        'name': name,
-        'tel': tel}
-    }
-    return person
+# import csv
+#
+# from urllib3.filepost import writer
+#
+# with open("student.csv", "w") as f:
+#     writer = csv.writer(f, delimiter=';', lineterminator="\r")
+#     writer.writerow(['Имя', 'Класс', 'Возраст'])
+#     writer.writerow(['Женя', '9', '15'])
+#     writer.writerow(['Саша', '5', '12'])
+#     writer.writerow(['Маша', '11', '17'])
 
-# print(gen_person())
+# data = [['hostname', 'vendor', 'model', 'location'],
+#         ['sw1', 'Cisco', '3750', 'London, Best str'],
+#         ['sw2', 'Cisco', '3850', 'Liverpool, Better str'],
+#         ['sw3', 'Cisco', '3650', 'Liverpool, Better str'],
+#         ['sw4', 'Cisco', '3650', 'London, Best str']]
 
-def write_json(person_dict):
-    try:
-        data = json.load(open('person.json'))
-    except FileNotFoundError:
-        data = {}
+# with open("sw_data.csv", "w") as f:
+#     writer = csv.writer(f, delimiter=';', lineterminator="\r")
+#     # for row in data:
+#     #     writer.writerow(row)
+#     writer.writerows(data)
 
-    dict.update(data, person_dict)
-    with open('person.json', 'w') as f:
-        json.dump(data, f, indent=2)
+data = [{
+    'hostname': 'sw1',
+    'location': 'London',
+    'model': '3750',
+    'vendor': 'Cisco'
+}, {
+    'hostname': 'sw2',
+    'location': 'Liverpool',
+    'model': '3850',
+    'vendor': 'Cisco'
+}, {
+    'hostname': 'sw3',
+    'location': 'Liverpool',
+    'model': '3650',
+    'vendor': 'Cisco'
+}, {
+    'hostname': 'sw4',
+    'location': 'London',
+    'model': '3650',
+    'vendor': 'Cisco'
+}]
 
-for i in range(5):
-    write_json(gen_person())
-
+with open("dict_writer.csv", "w") as f:
+    writer = csv.DictWriter(f, delimiter=';', lineterminator="\r", fieldnames=data[0].keys())
+    writer.writeheader()
+    for d in data:
+        writer.writerow(d)
