@@ -1,3 +1,4 @@
+import re
 from fileinput import close
 
 # numb=int(input('Введите пятизначное число: '))
@@ -624,6 +625,7 @@ from fileinput import close
 # CSV
 
 import csv
+from pkgutil import get_data
 
 # with open("data.csv") as f: # Через список
 #     file_reader = csv.reader(f, delimiter=";")
@@ -671,30 +673,141 @@ import csv
 #     #     writer.writerow(row)
 #     writer.writerows(data)
 
-data = [{
-    'hostname': 'sw1',
-    'location': 'London',
-    'model': '3750',
-    'vendor': 'Cisco'
-}, {
-    'hostname': 'sw2',
-    'location': 'Liverpool',
-    'model': '3850',
-    'vendor': 'Cisco'
-}, {
-    'hostname': 'sw3',
-    'location': 'Liverpool',
-    'model': '3650',
-    'vendor': 'Cisco'
-}, {
-    'hostname': 'sw4',
-    'location': 'London',
-    'model': '3650',
-    'vendor': 'Cisco'
-}]
+# data = [{
+#     'hostname': 'sw1',
+#     'location': 'London',
+#     'model': '3750',
+#     'vendor': 'Cisco'
+# }, {
+#     'hostname': 'sw2',
+#     'location': 'Liverpool',
+#     'model': '3850',
+#     'vendor': 'Cisco'
+# }, {
+#     'hostname': 'sw3',
+#     'location': 'Liverpool',
+#     'model': '3650',
+#     'vendor': 'Cisco'
+# }, {
+#     'hostname': 'sw4',
+#     'location': 'London',
+#     'model': '3650',
+#     'vendor': 'Cisco'
+# }]
+#
+# with open("dict_writer.csv", "w") as f:
+#     writer = csv.DictWriter(f, delimiter=';', lineterminator="\r", fieldnames=data[0].keys())
+#     writer.writeheader()
+#     for d in data:
+#         writer.writerow(d)
 
-with open("dict_writer.csv", "w") as f:
-    writer = csv.DictWriter(f, delimiter=';', lineterminator="\r", fieldnames=data[0].keys())
-    writer.writeheader()
-    for d in data:
-        writer.writerow(d)
+# ====================================== ПАРСИНГ (начало - лекция 25 от 07.06.2025) ====================================
+
+# from bs4 import BeautifulSoup
+#
+# f = open("index (2).html").read()
+# soup = BeautifulSoup(f, "html.parser")
+# row = soup.find("div", class_="name").text
+# row = soup.find_all("div", class_="name")
+# row = soup.find_all("div", class_="row")[2].find("div", {"class": "name"})
+# row = soup.find_all("div", {"data-set": "salary"})
+# row = soup.find_all("div", string="Alena") # по содержимому и
+# row = soup.find("div", string="Alena").parent # его родителю
+# row = soup.find("div", string="Alena").find_parent(class_="row") # по родителю с классом "row"
+# row = soup.find("div", id = "whois3") # по id
+# row = soup.find("div", id = "whois3").find_next_sibling() # последующий элемент того же уровня
+# row = soup.find("div", id = "whois3").find_previous_sibling() # последующий элемент того же уровня
+# print(row)
+
+# # ==================================== Работа с реальным сайтом ==================================================
+# import requests
+# from bs4 import BeautifulSoup
+#
+# # r = requests.get("https://ru.wordpress.org/")
+# # print(r.text)
+#
+# def main():
+#     url = "https://ru.wordpress.org/"
+#     print(get_data(get_html(url)))
+#
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, "lxml")
+#     p1 = soup.find("h1", class_="wp-block-heading").text
+#     return p1
+#
+# if __name__ == '__main__':
+#     main()
+#
+# # ==================================== Работа с реальным сайтом ==================================================
+# import requests
+# from bs4 import BeautifulSoup
+#
+# # r = requests.get("https://ru.wordpress.org/")
+# # print(r.text)
+#
+# def main():
+#     url = "https://ru.wordpress.org/plugins"
+#     get_data(get_html(url))
+#
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
+#
+# def refined(s):
+#     return re.sub(r"\D+", "", s)
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, "lxml")
+#     p1 = soup.find_all("section", class_="plugin-section")[2]
+#     plugins = p1.find_all("li")
+#     for plugin in plugins:
+#         name = plugin.find("h3", class_="entry-title").text
+#         url = plugin.find("h3", class_="entry-title").find("a").get("href")
+#         rating = plugin.find("span", class_="rating-count").text
+#         r = refined(rating)
+#         print(r)
+#
+#
+# if __name__ == '__main__':
+#     main()
+
+
+# # ==================================== Работа с реальным сайтом, плагины на блоках  ===================================
+# import requests
+# from bs4 import BeautifulSoup
+#
+# # r = requests.get("https://ru.wordpress.org/")
+# # print(r.text)
+#
+# def main():
+#     url = "https://ru.wordpress.org/plugins/browse/blocks"
+#     (get_data(get_html(url)))
+#
+# def get_html(url):
+#     r = requests.get(url)
+#     return r.text
+#
+# def get_data(html):
+#     soup = BeautifulSoup(html, "lxml")
+#     p1 = soup.find_all("li", class_="wp-block-post")
+#     for el in p1:
+#         name = el.find("h3", class_="entry-title").text
+#         url = el.find("h3", class_="entry-title").find("a").get("href")
+#         snippet = el.find("div", class_="entry-excerpt").text.strip()
+#         print(snippet)
+
+#========================================== Работа с реальным сайтом через ООП ==========================================
+
+from laser import Parser
+
+def main():
+    for i in range(1, 5):
+        pars = Parser(f"https://www.graycell.ru/online/scanwords/{i}.html", "news.text")
+        pars.run()
+
+if __name__ == '__main__':
+    main()
