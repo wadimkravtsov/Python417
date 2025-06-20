@@ -802,12 +802,35 @@ from pkgutil import get_data
 
 #========================================== Работа с реальным сайтом через ООП ==========================================
 
-from laser import Parser
+# from laser import Parser
+#
+# def main():
+#     for i in range(1, 5):
+#         pars = Parser(f"https://www.graycell.ru/online/scanwords/{i}.html", "news.text")
+#         pars.run()
+#
+# if __name__ == '__main__':
+#     main()
 
-def main():
-    for i in range(1, 5):
-        pars = Parser(f"https://www.graycell.ru/online/scanwords/{i}.html", "news.text")
-        pars.run()
+# =========================================== SQLite (Занятие 28 от 15.06.2025 =========================================
 
-if __name__ == '__main__':
-    main()
+import sqlite3
+
+# con = sqlite3.connect("profile.db")
+# cur = con.cursor()
+#
+# cur.execute("""
+# """)
+#
+# con.close()
+
+with sqlite3.connect("profile.db") as con:
+    cur = con.cursor()
+    cur.execute("""CREATE TABLE IF NOT EXISTS users(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    summa REAL,
+    date TEXT
+    )""")
+
+    cur.execute("DROP TABLE users")
