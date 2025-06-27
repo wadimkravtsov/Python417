@@ -837,8 +837,8 @@ import sqlite3
 
 # ================================== Занятие 29 от 21.06.2025 ==========================
 
-with sqlite3.connect("users.db") as con:
-    cur = con.cursor()
+# with sqlite3.connect("users.db") as con:
+#     cur = con.cursor()
     # cur.execute("""CREATE TABLE IF NOT EXISTS person(
     # id INTEGER PRIMARY KEY AUTOINCREMENT,
     # name TEXT NOT NULL,
@@ -871,14 +871,63 @@ with sqlite3.connect("users.db") as con:
     #     DROP TABLE person_table;
     #       """)
 
-    with sqlite3.connect("db_3.db") as con:
-        cur = con.cursor()
-        cur.execute("""
-            SELECT *
-            FROM T1
-            LIMIT 2, 5;
-        """)
+    # with sqlite3.connect("db_3.db") as con:
+    #     cur = con.cursor()
+    #     cur.execute("""
+    #         SELECT *
+    #         FROM T1
+    #         LIMIT 2, 5;
+    #     """)
+    #
+    #     for res in cur:
+    #         print(res)
 
-        for res in cur:
-            print(res)
+# ===========================    Занятие 30 от 22.06.2025 "Связи между таблицами" =====================
+
+import sqlite3
+
+
+# with sqlite3.connect("person.db") as con:
+#     cur = con.cursor()
+#     cur.execute("""CREATE TABLE IF NOT EXISTS companies(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     name TEXT NOT NULL)""")
+#
+#     cur.execute("""CREATE TABLE IF NOT EXISTS users(
+#     id INTEGER PRIMARY KEY AUTOINCREMENT,
+#     name TEXT NOT NULL,
+#     age INTEGER,
+#     company_id INTEGER,
+#     FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE SET NULL
+#     )""")
+
+with sqlite3.connect("education.db") as con:
+    cur = con.cursor()
+    cur.execute("""CREATE TABLE IF NOT EXISTS student(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    surname TEXT NOT NULL,
+    name TEXT NOT NULL,
+    patronymic  TEXT NOT NULL,
+    age INTEGER NOT NULL CHECK(age >= 17 AND age <= 50),
+    [group] TEXT NOT NULL,
+    FOREIGN KEY ([group]) REFERENCES groups (id) ON DELETE RESTRICT
+    )""")
+
+    cur.execute("""CREATE TABLE IF NOT EXISTS groups(
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       group_name TEXT NOT NULL)
+       """)
+
+    cur.execute("""CREATE TABLE IF NOT EXISTS association(
+       lesson_id INTEGER NOT NULL,
+       group_id INTEGER NOT NULL,
+       PRIMARY KEY (lesson_id, group_id),
+       FOREIGN KEY (lesson_id) REFERENCES lessons (id),
+       FOREIGN KEY (group_id) REFERENCES groups (id)
+       )""")
+
+    cur.execute("""CREATE TABLE IF NOT EXISTS lessons(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        lesson_title TEXT NOT NULL
+        )""")
 
