@@ -1180,14 +1180,222 @@ import sqlite3
 
 # +++++++++++++++++++++++++++++++++++++++++++++++ Запуск БД - ДЗ к занятию 34 от 06.07. +++++++++++++++++++++
 
-import os
+# import os
+#
+# from aparts.database import DATABASE_NAME, Session
+# import create_database_flat as db_creator
+#
+# if __name__ == '__main__':
+#     db_is_creator = os.path.exists(DATABASE_NAME)
+#     if not db_is_creator:
+#         db_creator.create_database()
 
-from aparts.database import DATABASE_NAME, Session
-import create_database_flat as db_creator
+# ============================================= Шаблонизаторы ( к занятию 33 от 05.07. ==========================
 
-if __name__ == '__main__':
-    db_is_creator = os.path.exists(DATABASE_NAME)
-    if not db_is_creator:
-        db_creator.create_database()
+# from jinja2 import Template
+#
+# name = "Игорь"
+# age = 28
+#
+# tm = Template("Мне {{ a*2 }} лет. Меня зовут {{ n.upper() }}.")
+# msg = tm.render(n=name, a=age)
+#
+# print(msg)
+#
+#
+# per = {'name': "Игорь", 'age': 28}
+#
+# tm = Template("Мне {{ p.age }} лет. Меня зовут {{ p['name'] }}.")
+# msg = tm.render(p=per)
+#
+# print(msg)
 
 
+# per = {'name': "Игорь", 'age': 28}
+#
+# tm = Template("Мне {{ p.age }} лет. Меня зовут {{ p['name'] }}.")
+# msg = tm.render(p=per)
+#
+# print(msg)
+
+# class Person:
+#     def __init__(self, name, age):
+#         self.name = name
+#         self.age = age
+#
+#     def get_age(self):
+#         return self.age
+#
+#
+# per = Person("Игорь", 28)
+#
+# tm = Template("Мне {{ p.get_age() }} лет. Меня зовут {{ p['name'] }}.")
+# msg = tm.render(p=per)
+#
+# print(msg)
+#
+# cities = [
+#     {'id': 1, 'city': 'Москва'},
+#     {'id': 2, 'city': 'Смоленск'},
+#     {'id': 3, 'city': 'Минск'},
+#     {'id': 4, 'city': 'Сочи'},
+#     {'id': 5, 'city': 'Ярославль'},
+# ]
+#
+# link = """<select>
+#     {% for c in cities %}
+#         {% if c.id > 3 %}
+#             <option value="{{ c['id'] }}">{{ c['city'] }}</option>
+#         {% elif c.city == 'Москва' %}
+#             <option>{{ c['city'] }}</option>
+#         {% else %}
+#             {{c['city']}}
+#         {% endif %}
+#     {% endfor %}
+# </select>"""
+#
+# tm = Template(link)
+# msg = tm.render(cities=cities)
+#
+# print(msg)
+
+# menu = [
+#     {'href': '/index', 'link': 'Главная'},
+#     {'href': '/news', 'link': 'Новости'},
+#     {'href': '/about', 'link': 'О компании'},
+#     {'href': '/shop', 'link': 'Магазин'},
+#     {'href': '/contacts', 'link': 'Контакты'},
+# ]
+#
+# link = """<ul>
+#     {% for i in menu %}
+#         {% if i.link == 'Главная' %}
+#         <li><a href='{{ i['href'] }}' class='active'>{{ i['link'] }}</a></li>
+#         {% else %}
+#         <li><a href='{{ i['href'] }}'>{{ i['link'] }}</a></li>
+#         {% endif %}
+#     {% endfor %}
+# </ul>"""
+#
+# tm = Template(link)
+# msg = tm.render(menu=menu)
+#
+# print(msg)
+
+
+# cars = [
+#     {'model': 'Audi', 'price': 23000},
+#     {'model': 'Skoda', 'price': 17300},
+#     {'model': 'Renault', 'price': 44200},
+#     {'model': 'Wolksvagen', 'price': 31300},
+# ]
+# cars = [4, 5, 6, 7, 8, 9, 10]
+# tpl = "{{ cs | sum(attribute='price') }}"
+# tpl = "{{ cs | sum }}"
+#
+# tpl = "{{ (cs | min(attribute='price')).model }}"
+# tpl = "{{ cs | random }}"
+# tpl = "{{ cs | replace('model', 'brand') }}"
+#
+# tm = Template(tpl)
+# msg = tm.render(cs=cars)
+#
+# print(msg)
+
+# persons = [
+#     {"name": "Алексей", "year": 18, "weight": 78.5},
+#     {"name": "Никита", "year": 28, "weight": 82.3},
+#     {"name": "Виталий", "year": 32, "weight": 94.1},
+# ]
+#
+# tpl = '''
+# {% for u in users %}
+# {% filter upper %}{{ u.name }}{% endfilter %}
+# {% endfor %}
+# '''
+#
+# tm = Template(tpl)
+# msg = tm.render(users=persons)
+#
+# print(msg)
+
+# =============================== макроопределения ========================================
+
+# html = """
+# {% macro fun_input(name, value='', type='text', size=20) %}
+#     <input type="{{ type }}" name="{{ name }}" value="{{ value }}" size={{ size }}>
+# {% endmacro %}
+#
+# <p>{{ fun_input('username', '', 'text', 40) }}</p>
+# <p>{{ fun_input('email', 'Email', 'email') }}</p>
+# <p>{{ fun_input('password', 'Пароль', 'password') }}</p>
+# """
+#
+# tm = Template(html)
+# msg = tm.render()
+#
+# print(msg)
+
+# # =================================================
+
+from jinja2 import Environment, FileSystemLoader
+
+# persons = [
+#      {"name": "Алексей", "year": 18, "weight": 78.5},
+#      {"name": "Никита", "year": 28, "weight": 82.3},
+#      {"name": "Виталий", "year": 32, "weight": 94.1},
+# ]
+#
+# html = """
+# {% macro list_users(list_of_user) %}
+#      <ul>
+#          {% for u in list_of_user %}
+#              <li>{{ u.name }} {{ caller(u) }}</li>
+#          {% endfor %}
+#      </ul>
+#  {% endmacro %}
+#
+# {% call(user) list_users(users) %}
+#       <ul>
+#           <li>age: {{ user.year }}</li>
+#           <li>weight: {{ user.weight }}</li>
+#       </ul>
+#   {% endcall %}
+#
+#
+#  """
+#
+# tm = Template(html)
+# msg = tm.render(users=persons)
+#
+# print(msg)
+
+# ================================== ДЗ к занятию 33 от 05.07. "Шаблонизаторы' ========================
+
+from jinja2 import Template
+
+persons = [
+     {"type": "text", "name": "firstname", "placeholder": "Имя"},
+     {"type": "text", "name": "lastname", "placeholder": "Фамилия"},
+     {"type": "text", "name": "address", "placeholder": "Адрес"},
+     {"type": "tel", "name": "phone", "placeholder": "Телефон"},
+     {"type": "email", "name": "email", "placeholder": "Почта"},
+
+]
+
+html = """
+
+     {% macro fun_input(type, name, placeholder) %}                        
+         <input type="{{ type }}" name="{{ name }}" placeholder = "{{placeholder}}">
+     {% endmacro %}
+     {% for u in users %}
+     <p>{{fun_input( u.type , u.name , u.placeholder)}}</p>                                                                     
+     {% endfor %}
+
+
+"""
+
+tm = Template(html)
+msg = tm.render(users=persons)
+
+print(msg)
