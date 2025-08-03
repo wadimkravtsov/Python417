@@ -1192,7 +1192,7 @@ import sqlite3
 
 # ============================================= Шаблонизаторы ( к занятию 33 от 05.07. ==========================
 
-# from jinja2 import Template
+from jinja2 import Template
 #
 # name = "Игорь"
 # age = 28
@@ -1371,31 +1371,31 @@ from jinja2 import Environment, FileSystemLoader
 # print(msg)
 
 # ================================== ДЗ к занятию 33 от 05.07. "Шаблонизаторы' ========================
-
-from jinja2 import Template
-
-persons = [
-     {"type": "text", "name": "firstname", "placeholder": "Имя"},
-     {"type": "text", "name": "lastname", "placeholder": "Фамилия"},
-     {"type": "text", "name": "address", "placeholder": "Адрес"},
-     {"type": "tel", "name": "phone", "placeholder": "Телефон"},
-     {"type": "email", "name": "email", "placeholder": "Почта"},
-
-]
-
-html = """
-
-     {% macro fun_input(type, name, placeholder) %}                        
-         <input type="{{ type }}" name="{{ name }}" placeholder = "{{placeholder}}">
-     {% endmacro %}
-     {% for u in users %}
-     <p>{{fun_input( u.type , u.name , u.placeholder)}}</p>                                                                     
-     {% endfor %}
-
-
-"""
-
-tm = Template(html)
-msg = tm.render(users=persons)
-
-print(msg)
+#
+# from jinja2 import Template
+#
+# persons = [
+#      {"type": "text", "name": "firstname", "placeholder": "Имя"},
+#      {"type": "text", "name": "lastname", "placeholder": "Фамилия"},
+#      {"type": "text", "name": "address", "placeholder": "Адрес"},
+#      {"type": "tel", "name": "phone", "placeholder": "Телефон"},
+#      {"type": "email", "name": "email", "placeholder": "Почта"},
+#
+# ]
+#
+# html = """
+#
+#      {% macro fun_input(type, name, placeholder) %}
+#          <input type="{{ type }}" name="{{ name }}" placeholder = "{{placeholder}}">
+#      {% endmacro %}
+#      {% for u in users %}
+#      <p>{{fun_input( u.type , u.name , u.placeholder)}}</p>
+#      {% endfor %}
+#
+#
+# """
+#
+# tm = Template(html)
+# msg = tm.render(users=persons)
+#
+# print(msg)

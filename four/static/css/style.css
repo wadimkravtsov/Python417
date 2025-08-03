@@ -1,0 +1,91 @@
+body{
+    background: lightyellow;
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.menu{
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    background: orange;
+    padding: 20px;
+    margin-top: 0;
+}
+.content{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.flash{
+    padding: 10px;
+}
+.success{
+    border: 1px solid #21DB56;
+    background: #AEFFC5;
+}
+.error{
+    border: 1px solid #FF4343;
+    background: #FF9C9C;
+}
+.menu a{
+    font-weight: bold;
+    color: white;
+}
+.menu2{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    gap: 60px;
+    list-style: none;
+}
+p > a{
+    text-decoration: none;
+    color: brown
+}
+li p, li div{
+    border: 1px solid silver;    
+}
+li div{
+    height: 220px;
+}
+.sale{
+    display: block;
+    background-color: #AEFFC5;
+    font-weight: bold;
+    padding: 5px;
+}
+p.title{
+    margin: 0;
+    font-weight: bold;
+    background: gold;
+    padding: 10px;
+}
+li div{
+    padding: 10px 20px;
+}
+p.title a{
+    display: block;
+    padding: 10px 20px;
+}
+p.sale a{
+    display: block;
+}
+p.sale a:hover{
+    background: greenyellow;
+}
+.annonce{
+    margin-top: -1px;
+    margin-bottom: 40px;
+    background: white;
+}
+p.babki{
+    margin-top: -40px;
+    font-weight: bold;
+    border: 2px solid black;
+    padding: 10px;
+    background-color: goldenrod
+
+}

@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request,flash, g
+from flask import Flask, render_template, request,flash, g, abort
 import os
 import sqlite3
 from fdatabase import FDataBase
+
 
 DATABASE = 'flsk.db'
 DEBUG = True
@@ -32,13 +33,33 @@ def get_db():
 def index():
     db = get_db()
     dbase = FDataBase(db)
-    return render_template('index.html', menu=dbase.get_menu())
+    return render_template('index.html', menu=dbase.get_menu(), posts=dbase.get_posts_annonce())
 
 @app.route("/add_post", methods=["POST", "GET"])
 def add_post():
     db = get_db()
     dbase = FDataBase(db)
+
+    if request.method == "POST":
+        if len(request.form['name']) > 4 and len(request.form['post']) > 10:
+            res = dbase.add_post(request.form['name'], request.form['post'], request.form['url'])
+            if not res:
+                flash("Ошибка добавления статьи", category="error")
+            else:
+                flash("Статья добавлена успешно", category="success")
+        else:
+            flash("Ошибка добавления статьи", category="error")
+
     return render_template('add_post.html', title="Добавление статьи", menu=dbase.get_menu())
+
+@app.route("/post/<alias>")
+def show_post(alias):
+    db = get_db()
+    dbase = FDataBase(db)
+    title, post = dbase.get_post(alias)
+    if not title:
+        abort(404)
+    return render_template('post.html', menu=dbase.get_menu(), title=title, post=post)
 
 
 @app.errorhandler(404)
