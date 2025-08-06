@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "generator/base.html" %}
+
+{% block content %}
     <h1>Генератор паролей</h1>
     <form action="{% url 'password' %}">
         <p><select name="length">
@@ -22,7 +18,7 @@
             <input type="checkbox" name="special"> Спецсимволы <br>
         </p>
         <input type="submit" value="Сгенерировать пароль">
+        <p><a href="{% url 'info' %}">Информация</a></p>
     </form>
 
-</body>
-</html>
+{% endblock %}
