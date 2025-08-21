@@ -1,0 +1,19 @@
+{% extends 'skills/base.html' %}
+
+{% block content %}
+<h1>Новости IT</h1>
+
+<h2 class="count">Постов: {{ sns.count }}</h2>
+
+{% for sn in sns %}
+<div class="element">
+    <h2 class="top1">{{ sn.title }}</h2>
+    <div class="blog_text">
+        <h5>{{ sn.date|date:'d.m.Y' }}</h5>
+        <p>{{ sn.description }}</p>
+    </div>
+
+</div>
+{% endfor %}
+
+{% endblock %}
