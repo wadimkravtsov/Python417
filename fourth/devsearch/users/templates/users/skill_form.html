@@ -1,6 +1,8 @@
 {% extends 'projects/base.html' %}
 {% load static %}
 {% block content %}
+
+
     <!-- Main Section -->
     <main class="formPage my-xl">
         <div class="content-box">
@@ -8,21 +10,18 @@
                 <a class="backButton" href="{% url 'account' %}"><img src="{% static 'images/left.png' %}" alt="left"></a>
                 <br>
 
-                <form class="form" method="POST" enctype="multipart/form-data">
+                <form class="form" method="POST">
                     {% csrf_token %}
                     {% for field in form %}
                     <div class="form__field">
                         <label for="formInput#text">{{ field.label }}: </label>
-<!--                        <input class="input input&#45;&#45;text" id="formInput#text" type="text" name="text"-->
                         {{ field }}
-<!--                            placeholder="Enter text" />-->
                     </div>
                     {% endfor %}
-
-
                     <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
                 </form>
             </div>
         </div>
     </main>
-{% endblock %}
+
+    {% endblock %}
